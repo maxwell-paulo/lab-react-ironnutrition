@@ -1,42 +1,60 @@
 import { useState } from 'react';
 
-export function AddFoodForm() {
+export function AddFoodForm(props) {
   const [form, setForm] = useState({
     name: '',
-    calories: '',
     image: '',
-    servings: '',
+    calories: 0,
+    servings: 0,
   });
-
   function handleChange(event) {
-    setForm({ ...form, [event.target.name]: event.target.value });
+    setForm({ form, [event.target.name]: event.target.value });
+  }
+
+  function handleAddFoods(event) {
+    event.preventDefault();
+    props.attList([form, ...props.attFood]);
   }
 
   return (
     <form>
       <label htmlFor="food-name">Name</label>
-      <input id="food-name" type="text" onChange={handleChange} name="name" />
+      <input
+        id="food-name"
+        type="text"
+        name="name"
+        value={form.name}
+        onChange={handleChange}
+      />
 
       <label htmlFor="food-image">Image</label>
-      <input id="food-image" type="text" onChange={handleChange} name="image" />
+      <input
+        id="food-image"
+        type="text"
+        name="image"
+        value={form.image}
+        onChange={handleChange}
+      />
 
       <label htmlFor="food-calories">Calories</label>
       <input
         id="food-calories"
-        type="text"
-        onChange={handleChange}
+        type="number"
         name="calories"
+        value={form.calories}
+        onChange={handleChange}
       />
 
       <label htmlFor="food-servings">Servings</label>
       <input
         id="food-servings"
-        type="text"
-        onChange={handleChange}
+        type="number"
         name="servings"
+        value={form.servings}
+        onChange={handleChange}
       />
 
-      <button type="submit">Create</button>
+      <button onClick={handleAddFoods}>Create</button>
     </form>
   );
 }
